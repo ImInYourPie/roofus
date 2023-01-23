@@ -1,6 +1,4 @@
 import dotenv from "dotenv";
-dotenv.config();
-
 import { IEnv } from "interfaces";
 
 const Env: IEnv = {

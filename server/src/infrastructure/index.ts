@@ -1,3 +1,4 @@
+import server from "./server.config";
 import orm from "./orm.config";
 
-export { orm };
+export { server, orm };
