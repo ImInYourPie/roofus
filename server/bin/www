@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require("../dist");
+var app = require("../dist/bundle");
 var debug = require("debug")("event-internal-app-be:server");
 var http = require("http");
 

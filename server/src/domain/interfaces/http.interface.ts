@@ -29,7 +29,7 @@ interface IHttpError {
 }
 
 interface IHttpResponseConstructable {
-  new (status: number, data: {}, stackTrace?: string):
+  new (status: number, data: {}, stackTrace?: string, meta?: {}):
     | IHttpError
     | IHttpSuccess;
 }

@@ -1,7 +1,7 @@
-const makeAdminUseCase: IAdminUseCase = () => {
+const makeAdminUseCase = () => {
   class AdminUseCase {
     constructor() {}
   }
 };
 
-export default AdminUseCase;
+export default makeAdminUseCase;
