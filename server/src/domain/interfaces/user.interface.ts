@@ -1,8 +1,23 @@
+import { EntityRepository, Loaded } from "@mikro-orm/core";
 import { Request, Response } from "express";
-import { IHttpResponseConstructable } from "./";
+
+interface IUserRepository {
+  save(user: IUserEntity): Promise<IUserEntity>;
+  edit(userId: string, body: IUserEntity): Promise<IUserEntity>;
+  delete(userId: string): Promise<IUserEntity>;
+  findOneById(userId: string): Promise<IUserEntity>;
+  findMany(): IUserList;
+}
 
 interface IUserService {
-  createOne(user: IUserEntity): IUserEntity;
+  createUser(user: IUserData): Promise<IUserEntity>;
+  getOneById(id: string): Promise<IUserEntity>;
+  getMany(): Promise<IUserList>;
+}
+
+interface IUserList {
+  users: IUserEntity[];
+  count: number;
 }
 
 interface IUserController {
@@ -10,12 +25,31 @@ interface IUserController {
 }
 
 interface IUserEntity {
-  id: number;
+  id: string;
   name: string;
 }
 
-interface IUserUseCase {
-  createUser(user: IUserEntity): Promise<IHttpResponseConstructable>;
+interface IUserData {
+  name: string;
 }
 
-export { IUserService, IUserController, IUserEntity, IUserUseCase };
+interface IUserEntityConstructable {
+  new (name: string): IUserEntity;
+}
+
+interface IUserUseCase {
+  createOneUser(user: IUserData): Promise<IUserEntity>;
+  list(): Promise<IUserList>;
+  getUserById(id: string): Promise<IUserEntity>;
+}
+
+export {
+  IUserRepository,
+  IUserService,
+  IUserController,
+  IUserEntity,
+  IUserUseCase,
+  IUserEntityConstructable,
+  IUserData,
+  IUserList,
+};

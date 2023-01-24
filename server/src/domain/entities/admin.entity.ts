@@ -1,29 +1,19 @@
-import { IUserEntity, IAdminEntity } from "interfaces";
+import { Property } from "@mikro-orm/core";
+import { IAdminEntity } from "interfaces/admin.interface";
+import { UserEntity } from "./user.entity";
 
-class Admin implements IAdminEntity {
-  #user: IUserEntity;
-  #email: string;
+class AdminEntity extends UserEntity implements IAdminEntity {
+  @Property()
+  email: string;
 
-  constructor(user: IUserEntity, email: string) {
-    this.#user = user;
-    this.#email = email;
-  }
+  @Property()
+  password: string;
 
-  public get id() {
-    return this.#user.id;
-  }
-
-  public get name() {
-    return this.#user.name;
-  }
-
-  public get email() {
-    return this.#email;
-  }
-
-  public set email(email: string) {
-    this.#email = email;
+  constructor(name: string, email: string, password: string) {
+    super(name);
+    this.email = email;
+    this.password = password;
   }
 }
 
-export default Admin;
+export default AdminEntity;

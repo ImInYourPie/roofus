@@ -19,6 +19,8 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
     alias: {
+      deps: path.resolve(__dirname, "src/infrastructure/server"),
+      domain: path.resolve(__dirname, "src/domain"),
       application: path.resolve(__dirname, "src/application"),
       config: path.resolve(__dirname, "src/config"),
       interfaces: path.resolve(__dirname, "src/domain/interfaces"),

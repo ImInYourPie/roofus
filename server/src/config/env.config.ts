@@ -1,14 +1,9 @@
-import dotenv from "dotenv";
-import { IEnv } from "interfaces";
+import "dotenv/config";
+import IEnv from "interfaces/env.interface";
 
 const Env: IEnv = {
-  db: {
-    host: process.env.DB_HOST as string,
-    name: process.env.DB_NAME as string,
-    user: process.env.DB_USER as string,
-    password: process.env.DB_PASSWORD as string,
-    migrationsDir: process.env.DB_MIGRATIONS_DIR as string,
-    port: process.env.DB_PORT as string,
+  mongo: {
+    uri: process.env.MONGO_URI as string,
   },
   isDev: process.env.NODE_ENV === "dev",
   isProd: process.env.NODE_ENV === "prod",

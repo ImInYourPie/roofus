@@ -1,11 +1,6 @@
 interface IEnv {
-  db: {
-    host: string;
-    name: string;
-    user: string;
-    password: string;
-    migrationsDir: string;
-    port: string;
+  mongo: {
+    uri: string;
   };
   isDev: boolean;
   isProd: boolean;

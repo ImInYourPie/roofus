@@ -1,30 +1,16 @@
-import { Entity } from "@mikro-orm/core";
-import { IUserEntity } from "interfaces";
+import { Entity, Property } from "@mikro-orm/core";
+import { IUserEntity } from "interfaces/user.interface";
+import CustomBaseEntity from "./base.entity";
 
-class User implements IUserEntity {
-  #id: number;
-  #name: string;
+@Entity()
+class UserEntity extends CustomBaseEntity implements IUserEntity {
+  @Property()
+  name: string;
 
-  constructor(id: number, name: string) {
-    this.#id = id;
-    this.#name = name;
-  }
-
-  public get id(): number {
-    return this.#id;
-  }
-
-  public set id(id: number) {
-    this.#id = id;
-  }
-
-  public get name(): string {
-    return this.#name;
-  }
-
-  public set name(name: string) {
-    this.#name = name;
+  constructor(name: string) {
+    super();
+    this.name = name;
   }
 }
 
-export default User;
+export { UserEntity };

@@ -1,3 +1,3 @@
-import { server } from "infrastructure";
+import { init } from "./src/infrastructure/server";
 
-export default server;
+init();
