@@ -1,5 +1,3 @@
-import UserUseCase from "application/usecases/user.usecase";
-import { NotFoundError } from "domain/errors";
 import { HttpResponse } from "domain/response";
 import { NextFunction, Request, Response, Router } from "express";
 import { IUserUseCase } from "interfaces/user.interface";
