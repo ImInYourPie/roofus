@@ -1,15 +1,18 @@
 import express, { Express, Request, Response, NextFunction } from "express";
-import { MikroORM, Property, RequestContext } from "@mikro-orm/core";
+import { MikroORM, RequestContext } from "@mikro-orm/core";
 
 import {
   makeAdminController,
+  makeOpenhouseController,
   makePropertyController,
   makeUserController,
 } from "presentation/controllers";
 import { User } from "entities/user.entity";
+import { Property } from "entities/property.entity";
 import options from "./orm.mongo";
 import { HttpResponse } from "domain/response";
 import { Admin } from "entities/admin.entity";
+import { Openhouse } from "entities/openhouse.entity";
 
 const app: Express = express();
 
@@ -28,6 +31,17 @@ export const init = async () => {
   app.use(
     "/admin",
     makeAdminController(orm.em.getRepository(Admin), Admin).router,
+  );
+  app.use(
+    "/openhouse",
+    makeOpenhouseController(
+      orm.em.getRepository(Openhouse),
+      Openhouse,
+      orm.em.getRepository(Property),
+      Property,
+      orm.em.getRepository(User),
+      User,
+    ).router,
   );
 
   app.use((req: Request, res: Response) => {

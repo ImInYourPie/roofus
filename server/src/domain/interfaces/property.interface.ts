@@ -1,5 +1,10 @@
 interface IPropertyUseCase {
   list(): Promise<IPropertyList>;
+  createOneProperty(propertyData: IPropertyData): Promise<IPropertyEntity>;
+  editOneProperty(
+    id: string,
+    propertyData: IPropertyData,
+  ): Promise<IPropertyEntity>;
 }
 
 interface IPropertyList {
@@ -12,8 +17,24 @@ interface IPropertyEntity {
   adress: string;
 }
 
-interface IPropertyService {
-  getMany(): Promise<IPropertyList>;
+interface IPropertyData {
+  adress: string;
 }
 
-export { IPropertyUseCase, IPropertyEntity, IPropertyList, IPropertyService };
+interface IPropertyService {
+  createProperty(propertyData: IPropertyData): Promise<IPropertyEntity>;
+  editProperty(
+    id: string,
+    propertyData: IPropertyData,
+  ): Promise<IPropertyEntity>;
+  getMany(): Promise<IPropertyList>;
+  getOneById(id: string): Promise<IPropertyEntity>;
+}
+
+export {
+  IPropertyUseCase,
+  IPropertyEntity,
+  IPropertyList,
+  IPropertyService,
+  IPropertyData,
+};
