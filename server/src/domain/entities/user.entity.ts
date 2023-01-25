@@ -3,7 +3,7 @@ import { IUserEntity } from "interfaces/user.interface";
 import CustomBaseEntity from "./base.entity";
 
 @Entity()
-class UserEntity extends CustomBaseEntity implements IUserEntity {
+class User extends CustomBaseEntity implements IUserEntity {
   @Property()
   name: string;
 
@@ -13,4 +13,4 @@ class UserEntity extends CustomBaseEntity implements IUserEntity {
   }
 }
 
-export { UserEntity };
+export { User };

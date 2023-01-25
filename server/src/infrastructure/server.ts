@@ -1,8 +1,11 @@
 import express, { Express, Request, Response, NextFunction } from "express";
-import { MikroORM, RequestContext } from "@mikro-orm/core";
+import { MikroORM, Property, RequestContext } from "@mikro-orm/core";
 
-import { makeUserController } from "presentation/controllers";
-import { UserEntity } from "entities/user.entity";
+import {
+  makePropertyController,
+  makeUserController,
+} from "presentation/controllers";
+import { User } from "entities/user.entity";
 import options from "./orm.mongo";
 import { HttpResponse } from "domain/response";
 
@@ -15,9 +18,10 @@ export const init = async () => {
 
   app.use((req, res, next) => RequestContext.create(orm.em, next));
 
+  app.use("/user", makeUserController(orm.em.getRepository(User), User).router);
   app.use(
-    "/user",
-    makeUserController(orm.em.getRepository(UserEntity), UserEntity).router,
+    "/property",
+    makePropertyController(orm.em.getRepository(Property), Property).router,
   );
 
   app.use((req: Request, res: Response) => {
@@ -32,7 +36,10 @@ export const init = async () => {
       res: Response,
       next: NextFunction,
     ) => {
-      const response = new HttpResponse({ message: err.message }, err.status);
+      const response = new HttpResponse(
+        { message: err.message },
+        err.status || 500,
+      );
       res.status(response.status).send(response);
     },
   );

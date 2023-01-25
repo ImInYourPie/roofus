@@ -2,7 +2,7 @@ import { HttpResponse } from "domain/response";
 import { NextFunction, Request, Response, Router } from "express";
 import { IUserUseCase } from "interfaces/user.interface";
 
-class UserController {
+class HouseController {
   public router = Router();
   userUseCase: IUserUseCase;
 
@@ -56,4 +56,4 @@ class UserController {
     }
   };
 }
-export default UserController;
+export default HouseController;

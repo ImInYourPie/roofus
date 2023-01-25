@@ -1,8 +1,8 @@
 import { Property } from "@mikro-orm/core";
 import { IAdminEntity } from "interfaces/admin.interface";
-import { UserEntity } from "./user.entity";
+import { User } from "./user.entity";
 
-class AdminEntity extends UserEntity implements IAdminEntity {
+class Admin extends User implements IAdminEntity {
   @Property()
   email: string;
 
@@ -16,4 +16,4 @@ class AdminEntity extends UserEntity implements IAdminEntity {
   }
 }
 
-export default AdminEntity;
+export default Admin;

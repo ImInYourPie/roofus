@@ -1,16 +1,16 @@
 import { EntityRepository } from "@mikro-orm/core";
 import { NotFoundError } from "domain/errors";
-import { UserEntity } from "entities/user.entity";
+import { User } from "entities/user.entity";
 import { IUserData, IUserEntity, IUserList } from "interfaces/user.interface";
 import { Constructable } from "typedi";
 
 class UserService {
-  userRepository: EntityRepository<UserEntity>;
-  UserEntity: Constructable<UserEntity>;
+  userRepository: EntityRepository<User>;
+  UserEntity: Constructable<User>;
 
   constructor(
-    userRepository: EntityRepository<UserEntity>,
-    UserEntity: Constructable<UserEntity>,
+    userRepository: EntityRepository<User>,
+    UserEntity: Constructable<User>,
   ) {
     this.userRepository = userRepository;
     this.UserEntity = UserEntity;
@@ -30,7 +30,7 @@ class UserService {
 
   public getMany = async (): Promise<IUserList> => {
     const [users, count] = await this.userRepository.findAndCount({});
-    return { users: users || [], count: count || 0 };
+    return { users, count: count || 0 };
   };
 }
 

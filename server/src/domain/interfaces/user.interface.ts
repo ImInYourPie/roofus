@@ -1,4 +1,3 @@
-import { EntityRepository, Loaded } from "@mikro-orm/core";
 import { Request, Response } from "express";
 
 interface IUserRepository {
