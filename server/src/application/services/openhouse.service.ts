@@ -1,4 +1,5 @@
 import { EntityRepository } from "@mikro-orm/core";
+import { NotFoundError } from "domain/errors";
 import { Openhouse } from "entities/openhouse.entity";
 import {
   IOpenhouseEntity,
@@ -6,7 +7,6 @@ import {
   IOpenhouseService,
   IOpenhouseWithProperty,
 } from "interfaces/openhouse.interface";
-import { IPropertyEntity } from "interfaces/property.interface";
 import { Constructable } from "typedi";
 
 class OpenhouseService implements IOpenhouseService {
@@ -36,9 +36,34 @@ class OpenhouseService implements IOpenhouseService {
     return openhouse;
   };
 
+  public editOpenhouse = async (
+    id: string,
+    openhouseData: IOpenhouseWithProperty,
+  ): Promise<IOpenhouseEntity> => {
+    const openhouse = await this.repository.findOne(id);
+
+    if (!openhouse) throw new NotFoundError("Property not found");
+
+    Object.assign(openhouse, openhouseData);
+
+    await this.repository.persistAndFlush(openhouse);
+    return openhouse;
+  };
+
   public getMany = async (): Promise<IOpenhouseList> => {
-    const [openhouses, count] = await this.repository.findAndCount({});
+    const [openhouses, count] = await this.repository.findAndCount(
+      {},
+      { populate: ["property"] },
+    );
     return { openhouses, count };
+  };
+
+  public getOneById = async (id: string): Promise<IOpenhouseEntity> => {
+    const openhouse = await this.repository.findOne(id, {
+      populate: ["property"],
+    });
+    if (!openhouse) throw new NotFoundError("Openhouse not found");
+    return openhouse;
   };
 }
 

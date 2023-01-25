@@ -10,9 +10,12 @@ import {
 import { User } from "entities/user.entity";
 import { Property } from "entities/property.entity";
 import options from "./orm.mongo";
+import config from "config";
 import { HttpResponse } from "domain/response";
 import { Admin } from "entities/admin.entity";
 import { Openhouse } from "entities/openhouse.entity";
+import AuthMiddleware from "presentation/middleware/auth.middleware";
+import UserService from "application/services/user.service";
 
 const app: Express = express();
 
@@ -23,7 +26,16 @@ export const init = async () => {
 
   app.use((req, res, next) => RequestContext.create(orm.em, next));
 
-  app.use("/user", makeUserController(orm.em.getRepository(User), User).router);
+  const authMiddleware = new AuthMiddleware(
+    new UserService(orm.em.getRepository(User), User),
+  );
+
+  authMiddleware.initialize();
+
+  app.use(
+    "/user",
+    makeUserController(orm.em.getRepository(User), User, authMiddleware).router,
+  );
   app.use(
     "/property",
     makePropertyController(orm.em.getRepository(Property), Property).router,
@@ -51,7 +63,7 @@ export const init = async () => {
 
   app.use(
     (
-      err: { message: any; status: number },
+      err: { message: any; status: number; stack?: string },
       req: Request,
       res: Response,
       next: NextFunction,
@@ -60,6 +72,10 @@ export const init = async () => {
         { message: err.message },
         err.status || 500,
       );
+
+      if (config.isDev || config.isTest)
+        response.data = { ...response.data, stack: err.stack };
+
       res.status(response.status).send(response);
     },
   );

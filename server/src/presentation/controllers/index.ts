@@ -11,8 +11,11 @@ import OpenhouseController from "./openhouse.controller";
 import PropertyController from "./property.controller";
 import UserController from "./user.controller";
 
-const makeUserController = (repository: any, entity: any) =>
-  new UserController(new UserUseCase(new UserService(repository, entity)), {});
+
+
+
+const makeUserController = (repository: any, entity: any, authMiddleware: any) =>
+  new UserController(new UserUseCase(new UserService(repository, entity)), authMiddleware);
 
 const makePropertyController = (repository: any, entity: any) =>
   new PropertyController(
@@ -23,7 +26,7 @@ const makePropertyController = (repository: any, entity: any) =>
 const makeAdminController = (repository: any, entity: any) =>
   new AdminController(
     new AdminUseCase(new AdminService(repository, entity)),
-    {},
+    ,
   );
 
 const makeOpenhouseController = (
