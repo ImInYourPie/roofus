@@ -2,12 +2,14 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import { MikroORM, Property, RequestContext } from "@mikro-orm/core";
 
 import {
+  makeAdminController,
   makePropertyController,
   makeUserController,
 } from "presentation/controllers";
 import { User } from "entities/user.entity";
 import options from "./orm.mongo";
 import { HttpResponse } from "domain/response";
+import { Admin } from "entities/admin.entity";
 
 const app: Express = express();
 
@@ -22,6 +24,10 @@ export const init = async () => {
   app.use(
     "/property",
     makePropertyController(orm.em.getRepository(Property), Property).router,
+  );
+  app.use(
+    "/admin",
+    makeAdminController(orm.em.getRepository(Admin), Admin).router,
   );
 
   app.use((req: Request, res: Response) => {

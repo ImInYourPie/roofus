@@ -4,10 +4,11 @@ import { MongoHighlighter } from "@mikro-orm/mongo-highlighter";
 import config from "config/index";
 import { User } from "entities/user.entity";
 import { Property } from "entities/property.entity";
+import { Admin } from "entities/admin.entity";
 
 const options: Options = {
   type: "mongo",
-  entities: [User, Property],
+  entities: [User, Property, Admin],
   dbName: "roofus",
   clientUrl: config.mongo.uri,
   highlighter: new MongoHighlighter(),
