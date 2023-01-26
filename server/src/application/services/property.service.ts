@@ -1,4 +1,5 @@
 import { EntityRepository } from "@mikro-orm/core";
+import { ObjectId } from "@mikro-orm/mongodb";
 import { NotFoundError } from "domain/errors";
 import { Property } from "entities/property.entity";
 import {
@@ -52,9 +53,23 @@ class PropertyService {
 
   public getOneById = async (propertyId: string): Promise<IPropertyEntity> => {
     const property = await this.repository.findOne(propertyId);
-    console.log("didnt crash here");
     if (!property) throw new NotFoundError("Property not found");
     return property;
+  };
+
+  public getPrev = async (date: string): Promise<IPropertyEntity | null> => {
+    const prevEntries = await this.repository.find({
+      createdAt: { $lt: date },
+    });
+
+    return prevEntries[prevEntries.length - 1] || null;
+  };
+
+  public getNext = async (date: string): Promise<IPropertyEntity | null> => {
+    const nextEntries = await this.repository.find({
+      createdAt: { $gt: date },
+    });
+    return nextEntries[nextEntries.length - 1] || null;
   };
 }
 

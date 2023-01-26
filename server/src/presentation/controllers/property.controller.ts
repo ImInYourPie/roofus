@@ -10,7 +10,7 @@ class PropertyController {
     this.useCase = useCase;
     this.router.use(authMiddleware.authenticate());
     this.router.route("/").get(this.many).post(this.create);
-    this.router.route("/:propertyId").get(this.many).patch(this.edit);
+    this.router.route("/:propertyId").get(this.one).patch(this.edit);
   }
 
   private create = async (
@@ -53,6 +53,21 @@ class PropertyController {
   ): Promise<void> => {
     try {
       const data = await this.useCase.list();
+      const response = new HttpResponse(data);
+      res.send(response);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  private one = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const { propertyId } = req.params;
+      const data = await this.useCase.getOne(propertyId);
       const response = new HttpResponse(data);
       res.send(response);
     } catch (err) {

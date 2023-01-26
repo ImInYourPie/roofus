@@ -4,6 +4,7 @@ import {
   IPropertyEntity,
   IPropertyList,
   IPropertyService,
+  IPropertyWithMeta,
 } from "interfaces/property.interface";
 
 class PropertyUseCase {
@@ -29,6 +30,14 @@ class PropertyUseCase {
 
   public async list(): Promise<IPropertyList> {
     return await this.service.getMany();
+  }
+
+  public async getOne(id: string): Promise<IPropertyWithMeta> {
+    const property = await this.service.getOneById(id);
+    const previous = await this.service.getPrev(property.createdAt);
+    const next = await this.service.getNext(property.createdAt);
+
+    return { property, meta: { previous, next } };
   }
 
   private validateAddress(name: string): void {
