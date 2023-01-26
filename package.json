@@ -4,9 +4,11 @@
     "node": ">=14"
   },
   "scripts": {
-    "build:server": "yartn --cwd server build",
+    "build:server": "yarn --cwd server build",
     "start:server": "yarn --cwd server start",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+    "dev:server": "yarn --cwd server dev",
+    "dev:client": "yarn --cwd client dev",
+    "dev": "concurrently yarn:dev:*"
   },
   "version": "1.0.0",
   "description": "\"Test project\"",
