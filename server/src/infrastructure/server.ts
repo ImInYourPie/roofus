@@ -17,7 +17,7 @@ import { HttpResponse } from "domain/response";
 import { Admin } from "entities/admin.entity";
 import { Openhouse } from "entities/openhouse.entity";
 import AuthMiddleware from "presentation/middleware/auth.middleware";
-import UserService from "application/services/user.service";
+import AdminService from "application/services/admin.service";
 
 const app: Express = express();
 
@@ -30,7 +30,7 @@ export const init = async () => {
   app.use((req, res, next) => RequestContext.create(orm.em, next));
 
   const authMiddleware = new AuthMiddleware(
-    new UserService(orm.em.getRepository(User), User),
+    new AdminService(orm.em.getRepository(Admin), Admin),
   );
 
   authMiddleware.initialize();

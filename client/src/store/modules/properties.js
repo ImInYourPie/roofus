@@ -43,9 +43,28 @@ export default {
         commit("setCount", data.count);
       });
     },
-    async saveNewEntry({ state, commit, dispatch }) {
+    async saveNewEntry({ state, commit }) {
       return await propertiesService
         .newProperty({ adress: state.form.adress })
+        .then(({ data, status }) => {
+          if (status !== 200) {
+            commit("setErrors", {
+              ...state.errors,
+              generic: "Something went wrong",
+            });
+
+            return false;
+          }
+
+          commit("setOpenForm", false);
+          commit("setItems", [data.property, ...state.items]);
+
+          return true;
+        });
+    },
+    async saveExistingEntry({ state, commit }) {
+      return await propertiesService
+        .editProperty({ propertyId: state.form.id, adress: state.form.adress })
         .then(({ data, status }) => {
           if (status !== 200) {
             commit("setErrors", {

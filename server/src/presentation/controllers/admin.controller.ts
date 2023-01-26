@@ -1,7 +1,6 @@
 import { HttpResponse } from "domain/response";
 import { NextFunction, Request, Response, Router } from "express";
 import { IAdminUseCase } from "interfaces/admin.interface";
-import { IPropertyUseCase } from "interfaces/property.interface";
 
 class AdminController {
   public router = Router();
@@ -9,8 +8,7 @@ class AdminController {
 
   constructor(useCase: IAdminUseCase, authMiddleware: any) {
     this.useCase = useCase;
-    this.router.use(authMiddleware.authenticate());
-    this.router.route("/").post(this.create);
+    this.router.route("/").post(authMiddleware.authenticate(), this.create);
     this.router.route("/auth").post(this.auth);
   }
 

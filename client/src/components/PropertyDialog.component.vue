@@ -18,7 +18,9 @@ export default {
       await store.dispatch("properties/saveNewEntry");
     };
 
-    const saveExistingEntry = async () => {};
+    const saveExistingEntry = async () => {
+      await store.dispatch("properties/saveExistingEntry");
+    };
 
     const handleClose = () => {
       store.commit("properties/setOpenForm", false);
