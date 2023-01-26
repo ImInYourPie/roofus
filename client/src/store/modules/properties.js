@@ -43,7 +43,7 @@ export default {
         commit("setCount", data.count);
       });
     },
-    async saveNewEntry({ state, commit }) {
+    async saveNewEntry({ state, commit, dispatch }) {
       return await propertiesService
         .newProperty({ adress: state.form.adress })
         .then(({ data, status }) => {
@@ -57,6 +57,7 @@ export default {
           }
 
           commit("setOpenForm", false);
+          commit("setErrors", { adress: "", generic: "" });
           commit("setItems", [data.property, ...state.items]);
 
           return true;
@@ -76,12 +77,23 @@ export default {
           }
 
           commit("setOpenForm", false);
+          commit("setErrors", { adress: "", generic: "" });
           const entity = state.items.find((item) => item.id === state.form.id);
           Object.assign(entity, data.property);
           commit("setItems", [...state.items]);
 
           return true;
         });
+    },
+    validateForm({ state, commit }) {
+      if (!state.form.adress)
+        commit("setErrors", {
+          ...state.errors,
+          adress: "Adress is required",
+        });
+
+      if (!!state.errors.adress) return false;
+      return true;
     },
   },
 };

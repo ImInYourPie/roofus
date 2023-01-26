@@ -7,6 +7,9 @@ export default {
     const store = useStore();
 
     const handleSave = async () => {
+      const valid = store.dispatch("properties/validateForm");
+      if (!valid) return;
+
       if (store.state.properties.isNew) {
         await saveNewEntry();
         return;
@@ -23,6 +26,7 @@ export default {
     };
 
     const handleClose = () => {
+      store.commit("properties/setErrors", { adress: "", generic: "" });
       store.commit("properties/setOpenForm", false);
     };
 
@@ -30,6 +34,7 @@ export default {
       open: computed(() => store.state.properties.openForm),
       form: computed(() => store.state.properties.form),
       saving: computed(() => store.state.properties.saving),
+      errors: computed(() => store.state.properties.errors),
       handleSave,
       handleClose,
     };
@@ -52,6 +57,8 @@ export default {
                 label="Address"
                 required
                 full-width
+                :error="!!errors.adress || !!errors.adress.generic"
+                :error-messages="errors.adress || errors.adress.generic"
               ></v-text-field>
             </v-col>
           </v-row>
