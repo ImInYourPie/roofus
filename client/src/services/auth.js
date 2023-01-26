@@ -1,4 +1,4 @@
-import api from "@/api";
+import api from "../libs/axios";
 
 export default {
   async login({ email, password }) {
