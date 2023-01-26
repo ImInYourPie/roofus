@@ -46,7 +46,7 @@ interface IOpenhouseWithProperty {
   visitorAmount: number;
   property: IPropertyEntity;
   visitors: string[];
-  startDate: string;
+  startDate: Date;
 }
 
 export {

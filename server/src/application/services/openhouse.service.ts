@@ -29,6 +29,7 @@ class OpenhouseService implements IOpenhouseService {
         openhouseData.visitorAmount,
         openhouseData.property,
         openhouseData.visitors,
+        openhouseData.startDate,
       ),
     );
 
