@@ -30,7 +30,7 @@ export default {
       state.isNew = isNew;
     },
     setForm(state, form) {
-      state.form = form;
+      state.form = { ...form };
     },
     setErrors(state, errors) {
       state.errors = errors;
@@ -76,7 +76,9 @@ export default {
           }
 
           commit("setOpenForm", false);
-          commit("setItems", [data.property, ...state.items]);
+          const entity = state.items.find((item) => item.id === state.form.id);
+          Object.assign(entity, data.property);
+          commit("setItems", [...state.items]);
 
           return true;
         });

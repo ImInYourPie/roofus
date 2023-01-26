@@ -23,3 +23,5 @@ export default {
     return data;
   },
 };
+
+export const axiosInstance = instance;

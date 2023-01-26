@@ -1,6 +1,7 @@
 <script>
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { axiosInstance } from "../libs/axios";
 
 export default {
   setup() {
@@ -17,6 +18,9 @@ export default {
         const success = await dispatch("auth/login");
 
         if (success) {
+          axiosInstance.defaults.headers = {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          };
           router.push({ name: "Home" });
         }
       }

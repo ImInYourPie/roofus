@@ -10,11 +10,7 @@ export default {
     return { ...res.data };
   },
   async editProperty({ propertyId, adress }) {
-    const res = await api.patch(
-      "/property",
-      { adress },
-      { params: propertyId },
-    );
+    const res = await api.patch(`/property/${propertyId}`, { adress });
     return { ...res.data };
   },
 };

@@ -1,33 +1,35 @@
 <script>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import PropertyDialogComponent from "../components/PropertyDialog.component.vue";
 
 export default {
   setup() {
-    const { state, dispatch, commit } = useStore();
+    const store = useStore();
 
     const fetch = async () => {
-      await dispatch("properties/getProperties");
+      await store.dispatch("properties/getProperties");
     };
 
     const handleEdit = (property) => {
-      commit("properties/setForm", property);
-      commit("properties/setOpenForm", true);
+      store.commit("properties/setForm", property);
+      store.commit("properties/setOpenForm", true);
     };
 
     const handleNew = () => {
-      commit("properties/setIsNew", true);
-      commit("properties/setForm", { adress: "" });
-      commit("properties/setOpenForm", true);
+      store.commit("properties/setIsNew", true);
+      store.commit("properties/setForm", { adress: "" });
+      store.commit("properties/setOpenForm", true);
     };
 
-    onMounted(fetch);
+    onMounted(() => {
+      store.dispatch("properties/getProperties");
+    });
 
     return {
-      items: computed(() => state.properties.items),
-      count: computed(() => state.properties.count),
-      loading: computed(() => state.properties.loading),
+      items: computed(() => store.state.properties.items),
+      count: computed(() => store.state.properties.count),
+      loading: computed(() => store.state.properties.loading),
       handleNew,
       handleEdit,
     };
@@ -45,8 +47,7 @@ export default {
         >New</v-btn
       >
     </div>
-    <h1 v-if="loading">Loading properties...</h1>
-    <v-row v-else>
+    <v-row>
       <v-col v-for="item in items" :key="item.id" cols="12" sm="6" md="4">
         <v-card variant="outlined">
           <v-card-title>{{ item.adress }}</v-card-title>
