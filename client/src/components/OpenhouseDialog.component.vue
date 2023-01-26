@@ -6,8 +6,9 @@ export default {
   setup() {
     const store = useStore();
 
-    const fetchUsers = async () => {
+    const fetchData = async () => {
       await store.dispatch("users/getUsers");
+      await store.dispatch("properties/getProperties");
     };
 
     const handleSave = async () => {
@@ -34,13 +35,14 @@ export default {
       store.commit("openhouses/setOpenForm", false);
     };
 
-    onMounted(fetchUsers);
+    onMounted(fetchData);
 
     return {
       open: computed(() => store.state.openhouses.openForm),
       form: computed(() => store.state.openhouses.form),
       saving: computed(() => store.state.openhouses.saving),
       errors: computed(() => store.state.openhouses.errors),
+      properties: computed(() => store.state.properties.items),
       users: computed(() => store.state.users.items),
       loadingUsers: computed(() => store.state.users.loading),
       handleSave,
@@ -52,7 +54,7 @@ export default {
 
 <template>
   <v-row justify="center">
-    <v-dialog v-model="open" max-width="25vw" fullscreen>
+    <v-dialog v-model="open" max-width="25vw">
       <v-card>
         <v-card-title>
           <span class="text-h5">Openhouse</span>
@@ -74,9 +76,23 @@ export default {
           <v-row>
             <v-col cols="12">
               <v-autocomplete
+                v-model="form.property"
+                :items="properties"
+                :item-title="(property) => property.adress"
+                :item-value="(property) => property.id"
+                dense
+                label="Property"
+              ></v-autocomplete>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-autocomplete
                 v-model="form.visitors"
                 :loading="loadingUsers"
-                :items="items"
+                :items="users"
+                :item-title="(user) => user.name"
+                :item-value="(user) => user.id"
                 dense
                 chips
                 small-chips
