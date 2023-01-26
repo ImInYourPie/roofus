@@ -54,32 +54,36 @@ class OpenhouseUseCase implements IOpenhouseUseCase {
   private buildOpenhouse = async (
     openhouseData: IOpenhouseData,
   ): Promise<IOpenhouseWithProperty> => {
+    const validDate = this.validateStartDate(openhouseData.startDate);
+    if (!validDate) throw new BadRequestError("Invalid start date provided");
+
     const inLimit = this.checkVisitorAmountInLimits(
       openhouseData.visitorAmount,
       openhouseData.visitors.length,
     );
-
     if (!inLimit) throw new BadRequestError("More visitors than house allows");
 
     const allValidVisitors = await this.validateVisitors(
       openhouseData.visitors,
     );
-
     if (!allValidVisitors)
       throw new BadRequestError(
         "Visitors is invalid, all visitors must existing users",
       );
 
+    if (!openhouseData.property)
+      throw new BadRequestError("Property is required");
+
     const property = await this.propertyService.getOneById(
       openhouseData.property,
     );
-
     if (!property) throw new NotFoundError("Property not found");
 
     return {
       visitorAmount: openhouseData.visitorAmount,
       property,
       visitors: openhouseData.visitors,
+      startDate: openhouseData.startDate,
     };
   };
 
@@ -90,8 +94,13 @@ class OpenhouseUseCase implements IOpenhouseUseCase {
     return numOfVisitors <= limit;
   };
 
+  private validateStartDate = (date: string) => {
+    return !isNaN(new Date(date).getDate());
+  };
+
   private validateVisitors = async (visitors: string[]): Promise<boolean> => {
     try {
+      if (visitors.length === 0) return true;
       for (let i = 0; i < visitors.length; ++i) {
         await this.userService.getOneById(visitors[i]);
       }

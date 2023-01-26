@@ -4,6 +4,7 @@ interface IOpenhouseData {
   property: string;
   visitorAmount: number;
   visitors: string[];
+  startDate: string;
 }
 
 interface IOpenhouseEntity {
@@ -11,6 +12,7 @@ interface IOpenhouseEntity {
   property: IPropertyEntity;
   visitorAmount: number;
   visitors: string[];
+  startDate: Date;
 }
 
 interface IOpenhouseList {
@@ -44,6 +46,7 @@ interface IOpenhouseWithProperty {
   visitorAmount: number;
   property: IPropertyEntity;
   visitors: string[];
+  startDate: string;
 }
 
 export {

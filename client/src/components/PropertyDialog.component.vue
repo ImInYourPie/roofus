@@ -57,8 +57,8 @@ export default {
                 label="Address"
                 required
                 full-width
-                :error="!!errors.adress || !!errors.adress.generic"
-                :error-messages="errors.adress || errors.adress.generic"
+                :error="!!errors.adress || !!errors.generic"
+                :error-messages="errors.adress || errors.generic"
               ></v-text-field>
             </v-col>
           </v-row>

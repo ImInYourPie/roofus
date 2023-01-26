@@ -52,6 +52,7 @@ class PropertyService {
 
   public getOneById = async (propertyId: string): Promise<IPropertyEntity> => {
     const property = await this.repository.findOne(propertyId);
+    console.log("didnt crash here");
     if (!property) throw new NotFoundError("Property not found");
     return property;
   };

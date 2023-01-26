@@ -1,38 +1,114 @@
+import openhousesService from "../../services/openhouses.service";
+
 export default {
+  namespaced: true,
   state: {
-    email: "",
-    password: "",
+    items: [],
+    count: 0,
+    loading: false,
+    openForm: false,
+    isNew: false,
+    saving: false,
+    form: {
+      visitors: [],
+      visitorAmount: 1,
+      startDate: new Date().toLocaleDateString(),
+    },
     errors: {
-      email: "",
-      password: "",
+      visitors: "",
+      visitorAmount: "",
+      startDate: "",
+      generic: "",
     },
   },
   mutations: {
-    setEmail(state, email) {
-      state.name = email;
+    setItems(state, items) {
+      state.items = items;
     },
-    setPassword(state, password) {
-      state.password = password;
+    setCount(state, count) {
+      state.count = count;
+    },
+    setOpenForm(state, open) {
+      state.openForm = open;
+    },
+    setIsNew(state, isNew) {
+      state.isNew = isNew;
+    },
+    setForm(state, form) {
+      state.form = { ...form };
     },
     setErrors(state, errors) {
-      state.errors = { ...state.errors, errors };
+      state.errors = errors;
     },
   },
   actions: {
-    async login({ commit }, { email, password }) {
-      try {
-        const { data } = await axios.post("/login", { email, password });
-        commit("setToken", data.token);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-      } catch (error) {
-        throw error;
-      }
+    async getOpenhouses({ commit }) {
+      return await openhousesService.fetchOpenhouses().then(({ data }) => {
+        commit("setItems", data.openhouses);
+        commit("setCount", data.count);
+      });
     },
-    logout({ commit }) {
-      commit("setToken", null);
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+    async saveNewEntry({ state, commit }) {
+      return await openhousesService
+        .newOpenhouse(state.form)
+        .then(({ data, status }) => {
+          if (status !== 200) {
+            commit("setErrors", {
+              ...state.errors,
+              generic: "Something went wrong",
+            });
+
+            return false;
+          }
+
+          commit("setOpenForm", false);
+          commit("setErrors", {
+            visitors: "",
+            visitorAmount: "",
+            startDate: "",
+            generic: "",
+          });
+          commit("setItems", [data.openhouse, ...state.items]);
+
+          return true;
+        });
+    },
+    async saveExistingEntry({ state, commit }) {
+      return await propertiesService
+        .editProperty({ propertyId: state.form.id, adress: state.form.adress })
+        .then(({ data, status }) => {
+          if (status !== 200) {
+            commit("setErrors", {
+              ...state.errors,
+              generic: "Something went wrong",
+            });
+
+            return false;
+          }
+
+          commit("setOpenForm", false);
+          commit("setErrors", {
+            visitors: "",
+            visitorAmount: "",
+            startDate: "",
+            generic: "",
+          });
+          const entity = state.items.find((item) => item.id === state.form.id);
+          Object.assign(entity, data.property);
+          commit("setItems", [...state.items]);
+
+          return true;
+        });
+    },
+    validateForm({ state, commit }) {
+      if (!state.form.adress)
+        commit("setErrors", {
+          ...state.errors,
+          adress: "Adress is required",
+        });
+
+      if (!!state.errors.adress) return false;
+      return true;
     },
   },
 };

@@ -13,11 +13,20 @@ class Openhouse extends CustomBaseEntity {
   @Prop()
   visitors: string[];
 
-  constructor(visitorAmount: number, property: Property, visitors: string[]) {
+  @Prop()
+  startDate: Date;
+
+  constructor(
+    visitorAmount: number,
+    property: Property,
+    visitors: string[],
+    startDate: Date,
+  ) {
     super();
     this.visitorAmount = visitorAmount;
     this.property = property;
     this.visitors = visitors;
+    this.startDate = startDate;
   }
 }
 

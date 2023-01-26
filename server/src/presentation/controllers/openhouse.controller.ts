@@ -19,11 +19,12 @@ class OpenhouseController {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      const { visitorAmount, property, visitors } = req.body;
+      const { visitorAmount, property, visitors, startDate } = req.body;
       const openhouse = await this.useCase.createOneOpenhouse({
         visitorAmount,
         property,
         visitors,
+        startDate,
       });
       const response = new HttpResponse({ openhouse });
       res.send(response);
@@ -39,12 +40,13 @@ class OpenhouseController {
   ): Promise<void> => {
     try {
       const { openhouseId } = req.params;
-      const { visitorAmount, property, visitors } = req.body;
+      const { visitorAmount, property, visitors, startDate } = req.body;
 
       await this.useCase.editOneOpenhouse(openhouseId, {
         visitorAmount,
         property,
         visitors,
+        startDate,
       });
 
       const updatedOpenhouse = await this.useCase.getOne(openhouseId);
