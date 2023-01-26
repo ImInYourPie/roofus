@@ -51,8 +51,8 @@ export default {
 
       return await authService
         .login({ email: state.email, password: state.password })
-        .then(({ data }) => {
-          if (data.status === 404) {
+        .then(({ data, status }) => {
+          if (status === 400) {
             commit("setErrors", { ...state.errors, invalidCreds: true });
             return false;
           }
@@ -60,7 +60,6 @@ export default {
           commit("setToken", data.token);
           localStorage.setItem("token", data.token);
           commit("resetFormAndErrors");
-          console.log("true");
           return true;
         })
         .finally(() => {

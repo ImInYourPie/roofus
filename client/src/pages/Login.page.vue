@@ -15,6 +15,10 @@ export default {
       const valid = await dispatch("auth/validateForm");
       if (valid) {
         const success = await dispatch("auth/login");
+        console.log(
+          "🚀 ~ file: Login.page.vue:18 ~ handleSubmit ~ success",
+          success,
+        );
 
         if (success) {
           router.push({ name: "Home" });
@@ -22,6 +26,7 @@ export default {
       }
     };
 
+    console.log(auth.errors.invalidCreds);
     return { auth, handleSubmit };
   },
 };
@@ -36,6 +41,9 @@ export default {
             <h1 class="text-center">Login</h1>
           </v-card-title>
           <v-card-text class="my-2">
+            <h4 v-if="auth.errors.invalidCreds" class="text-center text-error">
+              Invalid credentials
+            </h4>
             <v-form>
               <v-text-field
                 label="Email"
