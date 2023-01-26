@@ -1,6 +1,8 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import { MikroORM, RequestContext } from "@mikro-orm/core";
 
+import cors from "cors";
+
 import {
   makeAdminController,
   makeOpenhouseController,
@@ -23,6 +25,7 @@ export const init = async () => {
   const orm = await MikroORM.init(options);
 
   app.use(express.json());
+  app.use(cors());
 
   app.use((req, res, next) => RequestContext.create(orm.em, next));
 

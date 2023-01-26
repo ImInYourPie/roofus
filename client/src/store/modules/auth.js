@@ -17,6 +17,7 @@ const initialState = {
 };
 
 export default {
+  namespaced: true,
   state: initialState,
   getters: {
     isLoggedIn(state) {
@@ -37,24 +38,30 @@ export default {
     setToken(state, token) {
       state.token = token;
     },
+    setLoading(state, loading) {
+      state.loading = loading;
+    },
     resetFormAndErrors(state) {
       Object.assign(state, initialFormState);
     },
   },
   actions: {
-    async login({ commit }, { email, password }) {
+    async login({ state, commit }) {
       commit("setLoading", true);
 
-      authService
-        .login({ email, password })
+      return await authService
+        .login({ email: state.email, password: state.password })
         .then(({ data }) => {
           if (data.status === 404) {
             commit("setErrors", { ...state.errors, invalidCreds: true });
-            return;
+            return false;
           }
 
           commit("setToken", data.token);
           localStorage.setItem("token", data.token);
+          commit("resetFormAndErrors");
+          console.log("true");
+          return true;
         })
         .finally(() => {
           commit("setLoading", false);
@@ -64,10 +71,13 @@ export default {
       commit("setToken", "");
       localStorage.removeItem("token");
     },
-    validateInputs({ state, commit }, { email, password }) {
-      if (!email)
-        commit("setErrors", { ...state.errors, email: "Email is required" });
-      if (!password)
+    validateForm({ state, commit }) {
+      if (!state.email)
+        commit("setErrors", {
+          ...state.errors,
+          email: "Email is required",
+        });
+      if (!state.password)
         commit("setErrors", {
           ...state.errors,
           password: "Password is required",

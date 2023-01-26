@@ -11,11 +11,11 @@ export default {
     return data;
   },
   async post(path, body, params) {
-    const { data } = await instance.post(path, { params, body });
+    const { data } = await instance.post(path, body, params);
     return data;
   },
   async patch(path, body, params) {
-    const { data } = await instance.patch(path, { params, body });
+    const { data } = await instance.patch(path, body, params);
     return data;
   },
 };
