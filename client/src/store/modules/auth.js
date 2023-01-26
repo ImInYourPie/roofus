@@ -1,4 +1,4 @@
-import authService from "../../services/auth";
+import authService from "../../services/auth.service";
 
 const initialFormState = {
   email: "",
@@ -21,7 +21,6 @@ export default {
   state: initialState,
   getters: {
     isLoggedIn(state) {
-      console.log(state.token);
       return !!state.token;
     },
   },

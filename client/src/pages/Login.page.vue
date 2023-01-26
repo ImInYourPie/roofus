@@ -1,5 +1,4 @@
 <script>
-import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
@@ -9,16 +8,13 @@ export default {
       state: { auth },
       dispatch,
     } = useStore();
+
     const router = useRouter();
 
     const handleSubmit = async (e) => {
       const valid = await dispatch("auth/validateForm");
       if (valid) {
         const success = await dispatch("auth/login");
-        console.log(
-          "🚀 ~ file: Login.page.vue:18 ~ handleSubmit ~ success",
-          success,
-        );
 
         if (success) {
           router.push({ name: "Home" });
@@ -26,7 +22,6 @@ export default {
       }
     };
 
-    console.log(auth.errors.invalidCreds);
     return { auth, handleSubmit };
   },
 };
