@@ -6,8 +6,9 @@ class PropertyController {
   public router = Router();
   useCase: IPropertyUseCase;
 
-  constructor(useCase: IPropertyUseCase, authenticate: any) {
+  constructor(useCase: IPropertyUseCase, authMiddleware: any) {
     this.useCase = useCase;
+    this.router.use(authMiddleware.authenticate());
     this.router.route("/").get(this.many).post(this.create);
     this.router.route("/:propertyId").get(this.many).patch(this.edit);
   }

@@ -6,8 +6,9 @@ class OpenhouseController {
   public router = Router();
   useCase: IOpenhouseUseCase;
 
-  constructor(useCase: IOpenhouseUseCase, authenticate: any) {
+  constructor(useCase: IOpenhouseUseCase, authMiddleware: any) {
     this.useCase = useCase;
+    this.router.use(authMiddleware.authenticate());
     this.router.route("/").get(this.many).post(this.create);
     this.router.route("/:openhouseId").get(this.one).patch(this.edit);
   }

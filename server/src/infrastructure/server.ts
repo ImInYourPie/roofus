@@ -41,11 +41,16 @@ export const init = async () => {
   );
   app.use(
     "/property",
-    makePropertyController(orm.em.getRepository(Property), Property).router,
+    makePropertyController(
+      orm.em.getRepository(Property),
+      Property,
+      authMiddleware,
+    ).router,
   );
   app.use(
     "/admin",
-    makeAdminController(orm.em.getRepository(Admin), Admin).router,
+    makeAdminController(orm.em.getRepository(Admin), Admin, authMiddleware)
+      .router,
   );
   app.use(
     "/openhouse",
@@ -56,6 +61,7 @@ export const init = async () => {
       Property,
       orm.em.getRepository(User),
       User,
+      authMiddleware,
     ).router,
   );
 

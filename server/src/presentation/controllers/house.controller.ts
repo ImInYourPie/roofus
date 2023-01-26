@@ -6,8 +6,9 @@ class HouseController {
   public router = Router();
   userUseCase: IUserUseCase;
 
-  constructor(userUseCase: IUserUseCase, authenticate: any) {
+  constructor(userUseCase: IUserUseCase, authMiddleware: any) {
     this.userUseCase = userUseCase;
+    this.router.use(authMiddleware.authenticate());
     this.router.route("/").get(this.many).post(this.create);
     this.router.route("/:userId").get(this.one);
   }

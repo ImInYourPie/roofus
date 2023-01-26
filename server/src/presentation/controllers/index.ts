@@ -21,16 +21,24 @@ const makeUserController = (
     authMiddleware,
   );
 
-const makePropertyController = (repository: any, entity: any) =>
+const makePropertyController = (
+  repository: any,
+  entity: any,
+  authMiddleware: any,
+) =>
   new PropertyController(
     new PropertyUseCase(new PropertyService(repository, entity)),
-    {},
+    authMiddleware,
   );
 
-const makeAdminController = (repository: any, entity: any) =>
+const makeAdminController = (
+  repository: any,
+  entity: any,
+  authMiddleware: any,
+) =>
   new AdminController(
     new AdminUseCase(new AdminService(repository, entity)),
-    {},
+    authMiddleware,
   );
 
 const makeOpenhouseController = (
@@ -40,6 +48,7 @@ const makeOpenhouseController = (
   propertyEntity: any,
   userRepository: any,
   userEntity: any,
+  authMiddleware: any,
 ) =>
   new OpenhouseController(
     new OpenhouseUseCase(
@@ -47,7 +56,7 @@ const makeOpenhouseController = (
       new PropertyService(propertyRepository, propertyEntity),
       new UserService(userRepository, userEntity),
     ),
-    {},
+    authMiddleware,
   );
 
 export {

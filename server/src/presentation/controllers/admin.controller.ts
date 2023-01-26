@@ -7,8 +7,9 @@ class AdminController {
   public router = Router();
   useCase: IAdminUseCase;
 
-  constructor(useCase: IAdminUseCase, authenticate: any) {
+  constructor(useCase: IAdminUseCase, authMiddleware: any) {
     this.useCase = useCase;
+    this.router.use(authMiddleware.authenticate());
     this.router.route("/").post(this.create);
     this.router.route("/auth").post(this.auth);
   }
