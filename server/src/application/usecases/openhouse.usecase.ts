@@ -67,6 +67,10 @@ class OpenhouseUseCase implements IOpenhouseUseCase {
     );
     if (!inLimit) throw new BadRequestError("More visitors than house allows");
 
+    openhouseData.visitors = this.removeDuplicateVisitors(
+      openhouseData.visitors,
+    );
+
     const allValidVisitors = await this.validateVisitors(
       openhouseData.visitors,
     );
@@ -104,7 +108,7 @@ class OpenhouseUseCase implements IOpenhouseUseCase {
 
   private validateVisitors = async (visitors: string[]): Promise<boolean> => {
     try {
-      if (visitors.length === 0) return true;
+      if (!visitors || visitors.length === 0) return true;
       for (let i = 0; i < visitors.length; ++i) {
         await this.userService.getOneById(visitors[i]);
       }
@@ -113,6 +117,10 @@ class OpenhouseUseCase implements IOpenhouseUseCase {
       if (err instanceof NotFoundError) return false;
       throw err;
     }
+  };
+
+  private removeDuplicateVisitors = (visitors: string[]): string[] => {
+    return [...new Set(visitors)];
   };
 }
 
