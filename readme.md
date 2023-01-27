@@ -31,3 +31,4 @@ Just put the .env file provided in /server, and change VITE_API_URL, in /client,
 - Implemented requested features;
 - Implemented requested validations;
 - Did not create a signup page, as it was not defined on the requirements from my understanding, altought, it is possible to create new admins via POST /admin, with "email" and "password".
+- There is a known issue with startDate possible throwing an error from the POST/PATCH of an open house because of localization, but decided to ignore it as it was not defined in the requirements;

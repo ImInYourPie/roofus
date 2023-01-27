@@ -1,8 +1,6 @@
 <script>
 import Properties from "../components/Properties.component.vue";
-import Openhouses from "../components/Openhouses.component.vue";
 import PropertyDialog from "../components/PropertyDialog.component.vue";
-import OpenhouseDialog from "../components/OpenhouseDialog.component.vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
@@ -23,8 +21,6 @@ export default {
   components: {
     PropertyDialog,
     Properties,
-    Openhouses,
-    OpenhouseDialog,
   },
 };
 </script>
@@ -40,12 +36,7 @@ export default {
       >
     </v-row>
     <Properties />
-
-    <v-divider class="my-4"></v-divider>
-
-    <Openhouses />
   </v-container>
 
   <PropertyDialog />
-  <OpenhouseDialog />
 </template>

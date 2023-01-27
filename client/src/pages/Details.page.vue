@@ -3,6 +3,8 @@ import { onMounted, computed, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import PropertyCard from "../components/PropertyCard.component.vue";
+import Openhouses from "../components/Openhouses.component.vue";
+import OpenhouseDialog from "../components/OpenhouseDialog.component.vue";
 
 export default {
   setup() {
@@ -16,6 +18,10 @@ export default {
       });
 
       if (!success) router.push({ name: "404" });
+
+      store.dispatch("openhouses/getOpenhousesByProperty", {
+        propertyId: route.params.propertyId,
+      });
     };
 
     onMounted(fetch);
@@ -36,7 +42,7 @@ export default {
       loading: computed(() => store.state.property.loading),
     };
   },
-  components: { PropertyCard },
+  components: { PropertyCard, Openhouses, OpenhouseDialog },
 };
 </script>
 
@@ -46,21 +52,35 @@ export default {
       >Go home</v-btn
     >
     <v-divider class="my-3"></v-divider>
-    <v-card style="height: 50vh">
+    <v-card style="height: auto">
       <v-card-title v-if="loading">Loading...</v-card-title>
       <v-card-title v-else>Property on: {{ main.adress }} </v-card-title>
-      <v-card-text v-if="!loading">
-        <p>Previous:</p>
-        <PropertyCard v-if="!!prev" :item="prev" />
-        <v-card v-else variant="outlined">
-          <v-card-title>No previous house</v-card-title>
-        </v-card>
-        <p class="mt-2">Next:</p>
-        <PropertyCard v-if="!!next" :item="next" />
-        <v-card v-else variant="outlined">
-          <v-card-title>No next house</v-card-title>
-        </v-card>
+      <v-card-text>
+        <v-row align="baseline">
+          <v-col sm="6">
+            <p>Previous:</p>
+            <PropertyCard v-if="!!prev" :item="prev" />
+            <v-card v-else variant="outlined">
+              <v-card-title>No previous house</v-card-title>
+            </v-card>
+          </v-col>
+          <v-col sm="6">
+            <p class="mt-2">Next:</p>
+            <PropertyCard v-if="!!next" :item="next" />
+            <v-card v-else variant="outlined">
+              <v-card-title>No next house</v-card-title>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-divider class="mt-3"></v-divider>
+        <v-row>
+          <v-container>
+            <Openhouses />
+          </v-container>
+        </v-row>
       </v-card-text>
     </v-card>
   </v-container>
+
+  <OpenhouseDialog />
 </template>

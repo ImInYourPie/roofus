@@ -1,19 +1,18 @@
 <script>
-import { onMounted, computed } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
     const store = useStore();
-
-    const fetch = async () => {
-      await store.dispatch("openhouses/getOpenhouses");
-    };
+    const route = useRoute();
 
     const handleEdit = (openhouse) => {
       store.commit("openhouses/setIsNew", false);
       store.commit("openhouses/setForm", {
         ...openhouse,
+        property: route.params.propertyId,
         startDate: new Date(openhouse.startDate).toISOString().substring(0, 10),
       });
       store.commit("openhouses/setOpenForm", true);
@@ -22,14 +21,13 @@ export default {
     const handleNew = () => {
       store.commit("openhouses/setIsNew", true);
       store.commit("openhouses/setForm", {
+        property: route.params.propertyId,
         visitors: [],
         visitorAmount: 1,
         startDate: new Date().toISOString().substring(0, 10),
       });
       store.commit("openhouses/setOpenForm", true);
     };
-
-    onMounted(fetch);
 
     return {
       items: computed(() => store.state.openhouses.items),

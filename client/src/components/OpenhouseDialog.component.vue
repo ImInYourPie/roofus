@@ -81,20 +81,6 @@ export default {
           <v-row>
             <v-col cols="12">
               <v-autocomplete
-                v-model="form.property"
-                :items="properties"
-                :item-title="(property) => property.adress"
-                :item-value="(property) => property.id"
-                dense
-                label="Property"
-                :error="!!errors.property"
-                :error-messages="errors.property"
-              ></v-autocomplete>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-autocomplete
                 v-model="form.visitors"
                 :loading="loadingUsers"
                 :items="users"

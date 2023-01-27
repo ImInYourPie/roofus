@@ -52,6 +52,14 @@ export default {
         commit("setCount", data.count);
       });
     },
+    async getOpenhousesByProperty({ commit }, { propertyId }) {
+      return await openhousesService
+        .fetchOpenhousesByPropertyId({ propertyId })
+        .then(({ data }) => {
+          commit("setItems", data.openhouses);
+          commit("setCount", data.count);
+        });
+    },
     async saveNewEntry({ state, commit }) {
       return await openhousesService
         .newOpenhouse(state.form)

@@ -5,6 +5,10 @@ export default {
     const res = await api.get("/openhouse");
     return { ...res.data };
   },
+  async fetchOpenhousesByPropertyId({ propertyId }) {
+    const res = await api.get(`/openhouse/property/${propertyId}`);
+    return { ...res.data };
+  },
   async newOpenhouse({ visitors, visitorAmount, property, startDate }) {
     const res = await api.post("/openhouse", {
       visitors,
