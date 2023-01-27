@@ -12,7 +12,6 @@ Eliminated the need for setting up a separate database by utilizing MongoDB Atla
 #### How to run
 
     $ cd path/to/root/dir
-    $ yarn
     $ yarn start
 
 #### Project assumptions and features defined
