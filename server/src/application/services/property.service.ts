@@ -1,5 +1,4 @@
 import { EntityRepository } from "@mikro-orm/core";
-import { ObjectId } from "@mikro-orm/mongodb";
 import { NotFoundError } from "domain/errors";
 import { Property } from "entities/property.entity";
 import {
