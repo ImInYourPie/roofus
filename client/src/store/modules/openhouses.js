@@ -1,5 +1,9 @@
 import openhousesService from "../../services/openhouses.service";
 
+const validateVisitorsInLimit = (numOfVisitors, limit) => {
+  return numOfVisitors <= limit;
+};
+
 export default {
   namespaced: true,
   state: {
@@ -12,7 +16,7 @@ export default {
     form: {
       visitors: [],
       visitorAmount: 1,
-      startDate: new Date().toLocaleDateString(),
+      startDate: "",
     },
     errors: {
       visitors: "",
@@ -110,13 +114,41 @@ export default {
         });
     },
     validateForm({ state, commit }) {
-      if (!state.form.adress)
+      commit("setErrors", {
+        visitors: "",
+        visitorAmount: "",
+        startDate: "",
+        generic: "",
+      });
+
+      const inLimit = validateVisitorsInLimit(
+        state.form.visitors.length,
+        state.form.visitorAmount,
+      );
+
+      if (!inLimit) {
         commit("setErrors", {
           ...state.errors,
-          adress: "Adress is required",
+          visitors: `Number of visitors exceeds amount allowed, max allowed: ${state.form.visitorAmount}`,
         });
+      }
 
-      if (!!state.errors.adress) return false;
+      if (!state.form.startDate) {
+        commit("setErrors", {
+          ...state.errors,
+          startDate: `Start date is required`,
+        });
+      }
+
+      if (!state.form.property) {
+        commit("setErrors", {
+          ...state.errors,
+          property: `Property is required`,
+        });
+      }
+
+      if (Object.values(state.errors).some((message) => !!message))
+        return false;
       return true;
     },
   },

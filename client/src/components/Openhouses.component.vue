@@ -11,6 +11,7 @@ export default {
     };
 
     const handleEdit = (openhouse) => {
+      store.commit("openhouses/setIsNew", false);
       store.commit("openhouses/setForm", openhouse);
       store.commit("openhouses/setOpenForm", true);
     };

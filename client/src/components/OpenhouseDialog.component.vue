@@ -12,7 +12,7 @@ export default {
     };
 
     const handleSave = async () => {
-      const valid = store.dispatch("openhouses/validateForm");
+      const valid = await store.dispatch("openhouses/validateForm");
       if (!valid) return;
 
       if (store.state.openhouses.isNew) {
@@ -31,7 +31,12 @@ export default {
     };
 
     const handleClose = () => {
-      store.commit("openhouses/setErrors", { adress: "", generic: "" });
+      store.commit("openhouses/setErrors", {
+        visitors: "",
+        visitorAmount: "",
+        startDate: "",
+        generic: "",
+      });
       store.commit("openhouses/setOpenForm", false);
     };
 
@@ -82,6 +87,8 @@ export default {
                 :item-value="(property) => property.id"
                 dense
                 label="Property"
+                :error="!!errors.property"
+                :error-messages="errors.property"
               ></v-autocomplete>
             </v-col>
           </v-row>
@@ -98,6 +105,8 @@ export default {
                 small-chips
                 label="Visitors"
                 multiple
+                :error="!!errors.visitors"
+                :error-messages="errors.visitors"
               ></v-autocomplete>
             </v-col>
           </v-row>
@@ -108,7 +117,6 @@ export default {
                 type="date"
                 label="Start date"
                 full-width
-                format="DD-MM-YYYY"
                 :error="!!errors.startDate"
                 :error-messages="errors.startDate"
               ></v-text-field>
