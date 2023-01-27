@@ -36,4 +36,4 @@ Place the provided '.env' file in the '/server' directory, and update the 'VITE_
 
 #### Auth strategy via Postman/others
 
-**Login with the provided credentials above, use the "token" as "Bearer token" as such: "Bearer long_token_string_here"**
+**Login via POST "/admin/auth" with the provided credentials above, use the "token" as "Bearer token" as such: "Bearer long_token_string_here"**
