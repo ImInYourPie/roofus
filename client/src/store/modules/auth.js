@@ -68,6 +68,7 @@ export default {
     logout({ commit }) {
       commit("setToken", "");
       localStorage.removeItem("token");
+      return true;
     },
     validateForm({ state, commit }) {
       if (!state.email)
