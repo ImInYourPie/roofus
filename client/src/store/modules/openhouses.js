@@ -74,8 +74,17 @@ export default {
         });
     },
     async saveExistingEntry({ state, commit }) {
-      return await propertiesService
-        .editProperty({ propertyId: state.form.id, adress: state.form.adress })
+      return await openhousesService
+        .editOpenhouse({
+          openhouseId: state.form.id,
+          visitors: state.form.visitors,
+          visitorAmount: state.form.visitorAmount,
+          property:
+            typeof state.form.property === "object"
+              ? state.form.property.id
+              : state.form.property,
+          startDate: state.form.startDate,
+        })
         .then(({ data, status }) => {
           if (status !== 200) {
             commit("setErrors", {
