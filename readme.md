@@ -8,8 +8,9 @@
 #### Notes
 
 Login info for created admin:
-email: admin.one@gmail.com
-password: 123456
+
+**email**: admin.one@gmail.com
+**password**: 123456
 
 Eliminated the need for setting up a separate database by utilizing MongoDB Atlas, which includes a pre-configured URI with preset data and allows connections from any location.
 Place the provided '.env' file in the '/server' directory, and update the 'VITE_API_URL' in '/client/.env' to match the desired port.
