@@ -71,6 +71,7 @@ export default {
       return true;
     },
     validateForm({ state, commit }) {
+      commit("setErrors", { email: "", password: "", invalidCreds: false });
       if (!state.email)
         commit("setErrors", {
           ...state.errors,

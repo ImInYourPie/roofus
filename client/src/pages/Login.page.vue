@@ -14,6 +14,7 @@ export default {
 
     const handleSubmit = async (e) => {
       const valid = await dispatch("auth/validateForm");
+      console.log("🚀 ~ file: Login.page.vue:17 ~ handleSubmit ~ valid", valid);
       if (valid) {
         const success = await dispatch("auth/login");
 
