@@ -8,11 +8,15 @@
 #### Notes
 
 Eliminated the need for setting up a separate database by utilizing MongoDB Atlas, which includes a pre-configured URI with preset data and allows connections from any location.
+Just put the .env file provided in /server, and change VITE_API_URL, in /client, to the decired port.
 
 #### How to run
 
     $ cd path/to/root/dir
     $ yarn start
+
+- Server runs on specified port on env or 3000;
+- Client runs on 3001;
 
 #### Project assumptions and features defined
 

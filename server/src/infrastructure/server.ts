@@ -89,7 +89,7 @@ export const init = async () => {
     },
   );
 
-  app.listen(3000, () => {
-    console.log(`Listening on port 3000`);
+  app.listen(parseInt(config.port) || 3000, () => {
+    console.log(`Listening on port ${config.port || 3000}`);
   });
 };
