@@ -9,7 +9,10 @@
     "start:server": "yarn --cwd server start",
     "dev:server": "yarn --cwd server dev",
     "dev:client": "yarn --cwd client dev",
+    "install:client": "yarn --cwd client",
+    "install:server": "yarn --cwd server",
     "dev": "concurrently yarn:dev:*",
+    "prestart": "yarn && yarn install:server && yarn install:client",
     "start": "yarn build:server-no-watch && concurrently yarn:dev:*"
   },
   "version": "1.0.0",
@@ -17,11 +20,7 @@
   "main": "index.js",
   "author": "ImInYourPie <36893864+ImInYourPie@users.noreply.github.com>",
   "license": "MIT",
-  "private": true,
-  "workspaces": [
-    "client",
-    "server"
-  ],
+  "private": false,
   "devDependencies": {
     "concurrently": "^7.6.0",
     "eslint": "^8.32.0"

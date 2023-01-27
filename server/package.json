@@ -8,6 +8,7 @@
     "build": "webpack --watch",
     "build:no-watch": "webpack",
     "start": "node dist/index.js",
+    "init": "yarn",
     "dev": "nodemon -q dist/bundle.js"
   },
   "devDependencies": {
