@@ -31,10 +31,10 @@ export default {
 
 <template>
   <v-container>
-    <v-row align="center" justify="space-around">
-      <v-col><h1>Home</h1></v-col>
-      <v-col
-        ><v-btn @click="handleLogout" small variant="outlined"
+    <v-row align="center">
+      <v-col sm="10"><h1>Home</h1></v-col>
+      <v-col class="d-flex justify-end"
+        ><v-btn @click="handleLogout" small variant="outlined" color="error"
           >Logout</v-btn
         ></v-col
       >

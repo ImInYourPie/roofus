@@ -107,7 +107,7 @@ export default {
             generic: "",
           });
           const entity = state.items.find((item) => item.id === state.form.id);
-          Object.assign(entity, data.property);
+          Object.assign(entity, data.updatedOpenhouse);
           commit("setItems", [...state.items]);
 
           return true;

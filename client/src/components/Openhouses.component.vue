@@ -12,7 +12,10 @@ export default {
 
     const handleEdit = (openhouse) => {
       store.commit("openhouses/setIsNew", false);
-      store.commit("openhouses/setForm", openhouse);
+      store.commit("openhouses/setForm", {
+        ...openhouse,
+        startDate: new Date(openhouse.startDate).toISOString().substring(0, 10),
+      });
       store.commit("openhouses/setOpenForm", true);
     };
 
@@ -21,7 +24,7 @@ export default {
       store.commit("openhouses/setForm", {
         visitors: [],
         visitorAmount: 1,
-        startDate: new Date().toISOString().substr(0, 10),
+        startDate: new Date().toISOString().substring(0, 10),
       });
       store.commit("openhouses/setOpenForm", true);
     };
