@@ -18,7 +18,11 @@ export default {
 
     const handleNew = () => {
       store.commit("openhouses/setIsNew", true);
-      store.commit("openhouses/setForm", { visitors: [], visitorAmount: 0 });
+      store.commit("openhouses/setForm", {
+        visitors: [],
+        visitorAmount: 1,
+        startDate: new Date().toISOString().substr(0, 10),
+      });
       store.commit("openhouses/setOpenForm", true);
     };
 

@@ -114,7 +114,7 @@ export default {
             <v-col cols="12">
               <v-text-field
                 v-model="form.startDate"
-                type="date"
+                type="date-local"
                 label="Start date"
                 full-width
                 :error="!!errors.startDate"

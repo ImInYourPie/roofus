@@ -16,7 +16,7 @@ export default {
     form: {
       visitors: [],
       visitorAmount: 1,
-      startDate: "",
+      startDate: new Date(),
     },
     errors: {
       visitors: "",

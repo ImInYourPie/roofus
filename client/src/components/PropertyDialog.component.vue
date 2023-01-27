@@ -22,7 +22,11 @@ export default {
     };
 
     const saveExistingEntry = async () => {
-      await store.dispatch("properties/saveExistingEntry");
+      const success = await store.dispatch("properties/saveExistingEntry");
+
+      if (success) {
+        await store.dispatch("openhouses/getOpenhouses");
+      }
     };
 
     const handleClose = () => {
