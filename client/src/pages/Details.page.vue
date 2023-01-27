@@ -39,12 +39,24 @@ export default {
 
 <template>
   <v-container>
+    <v-btn :to="{ name: 'Home' }" small variant="outlined" color="primary"
+      >Go home</v-btn
+    >
+    <v-divider class="my-3"></v-divider>
     <v-card style="height: 50vh">
       <v-card-title v-if="loading">Loading...</v-card-title>
       <v-card-title v-else>Property on: {{ main.adress }} </v-card-title>
-      <v-card-text>
+      <v-card-text v-if="!loading">
+        <p>Previous:</p>
         <PropertyCard v-if="!!prev" :item="prev" />
+        <v-card v-else variant="outlined">
+          <v-card-title>No previous house</v-card-title>
+        </v-card>
+        <p class="mt-2">Next:</p>
         <PropertyCard v-if="!!next" :item="next" />
+        <v-card v-else variant="outlined">
+          <v-card-title>No next house</v-card-title>
+        </v-card>
       </v-card-text>
     </v-card>
   </v-container>
