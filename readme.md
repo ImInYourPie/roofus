@@ -33,3 +33,7 @@ Place the provided '.env' file in the '/server' directory, and update the 'VITE_
 - Implemented requested validations;
 - I did not create a sign-up page as it was not included in the project requirements, although it is possible to create new admins using the POST '/admin' endpoint with the "email" and "password" fields;
 - There is a known issue with the "startDate" field potentially causing an error with the POST/PATCH of an open house due to localization issues. However, as it was not specified in the requirements, I decided not to address it at this time.
+
+#### Auth strategy via Postman/others
+
+**Login with the provided credentials above, use the "token" as "Bearer token" as such: "Bearer long_token_string_here"**
