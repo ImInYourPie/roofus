@@ -5,6 +5,7 @@ import { useRoute, useRouter } from "vue-router";
 import PropertyCard from "../components/PropertyCard.component.vue";
 import Openhouses from "../components/Openhouses.component.vue";
 import OpenhouseDialog from "../components/OpenhouseDialog.component.vue";
+import Loading from "../components/Loading.component.vue";
 
 export default {
   setup() {
@@ -42,7 +43,7 @@ export default {
       loading: computed(() => store.state.property.loading),
     };
   },
-  components: { PropertyCard, Openhouses, OpenhouseDialog },
+  components: { PropertyCard, Openhouses, OpenhouseDialog, Loading },
 };
 </script>
 
@@ -51,10 +52,12 @@ export default {
     <v-btn :to="{ name: 'Home' }" small variant="outlined" color="primary"
       >Go home</v-btn
     >
-    <v-divider class="my-3"></v-divider>
-    <v-card style="height: auto">
-      <v-card-title v-if="loading">Loading...</v-card-title>
-      <v-card-title v-else>Property on: {{ main.adress }} </v-card-title>
+    <Loading v-if="loading" />
+
+    <v-divider v-if="!loading" class="my-3"></v-divider>
+
+    <v-card v-if="!loading" style="height: auto">
+      <v-card-title>Property on: {{ main.adress }} </v-card-title>
       <v-card-text>
         <v-row align="baseline">
           <v-col sm="6">

@@ -130,6 +130,13 @@ export default {
         generic: "",
       });
 
+      if (state.form.visitorAmount < 1) {
+        commit("setErrors", {
+          ...state.errors,
+          visitorAmount: `Visitor amount must be at least 1`,
+        });
+      }
+
       const inLimit = validateVisitorsInLimit(
         state.form.visitors.length,
         state.form.visitorAmount,
@@ -138,7 +145,9 @@ export default {
       if (!inLimit) {
         commit("setErrors", {
           ...state.errors,
-          visitors: `Number of visitors exceeds amount allowed, max allowed: ${state.form.visitorAmount}`,
+          visitors: !!state.errors.visitorAmount
+            ? `Visitor amount must be at least 1`
+            : `Number of visitors exceeds amount allowed, max allowed: ${state.form.visitorAmount}`,
         });
       }
 

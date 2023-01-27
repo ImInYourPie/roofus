@@ -47,14 +47,14 @@ export default {
       >New</v-btn
     >
   </div>
-  <v-row>
+  <v-row v-if="items.length > 0">
     <v-col v-for="item in items" :key="item.id" cols="12" sm="6" md="4">
       <v-card variant="outlined">
         <v-card-title>{{ item.property.adress }}</v-card-title>
         <v-card-text
           >Visitor amount: {{ item.visitorAmount }}, Current count:
-          {{ item.visitors.length }}</v-card-text
-        >
+          {{ item.visitors.length }}
+        </v-card-text>
         <v-card-actions>
           <v-btn
             size="small"
@@ -65,6 +65,13 @@ export default {
           >
         </v-card-actions>
       </v-card>
+    </v-col>
+  </v-row>
+
+  <v-row v-else>
+    <v-col class="text-xs-center" cols="12">
+      <p class="headline">No openhouses found.</p>
+      <p>Please add a new openhouse to see it here.</p>
     </v-col>
   </v-row>
 </template>
