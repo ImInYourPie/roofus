@@ -5,10 +5,12 @@
   },
   "scripts": {
     "build:server": "yarn --cwd server build",
+    "build:server-no-watch": "yarn --cwd server build:no-watch",
     "start:server": "yarn --cwd server start",
     "dev:server": "yarn --cwd server dev",
     "dev:client": "yarn --cwd client dev",
-    "dev": "concurrently yarn:dev:*"
+    "dev": "concurrently yarn:dev:*",
+    "start": "yarn build:server-no-watch && concurrently yarn:dev:*"
   },
   "version": "1.0.0",
   "description": "\"Test project\"",

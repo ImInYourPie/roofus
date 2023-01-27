@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "build": "webpack --watch",
+    "build:no-watch": "webpack",
     "start": "node dist/index.js",
     "dev": "nodemon -q dist/bundle.js"
   },
