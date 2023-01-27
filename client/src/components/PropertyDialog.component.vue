@@ -14,7 +14,11 @@ export default {
         await saveNewEntry();
         return;
       }
-      await saveExistingEntry();
+      const success = await saveExistingEntry();
+
+      if (success) {
+        await store.dispatch("openhouses/getOpenhouses");
+      }
     };
 
     const saveNewEntry = async () => {
@@ -22,11 +26,7 @@ export default {
     };
 
     const saveExistingEntry = async () => {
-      const success = await store.dispatch("properties/saveExistingEntry");
-
-      if (success) {
-        await store.dispatch("openhouses/getOpenhouses");
-      }
+      return await store.dispatch("properties/saveExistingEntry");
     };
 
     const handleClose = () => {

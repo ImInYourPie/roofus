@@ -1,18 +1,21 @@
 <script>
 import { onMounted, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import PropertyCard from "../components/PropertyCard.component.vue";
 
 export default {
   setup() {
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
 
     const fetch = async () => {
-      await store.dispatch("property/getPropertyById", {
+      const success = await store.dispatch("property/getPropertyById", {
         propertyId: route.params.propertyId,
       });
+
+      if (!success) router.push({ name: "404" });
     };
 
     onMounted(fetch);

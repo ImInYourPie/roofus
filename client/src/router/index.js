@@ -5,6 +5,7 @@ import store from "../store";
 import Login from "../pages/Login.page.vue";
 import Home from "../pages/Home.page.vue";
 import Details from "../pages/Details.page.vue";
+import PageNotFound from "../pages/404.page.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     name: "Details",
     component: Details,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "404",
+    component: PageNotFound,
   },
 ];
 
