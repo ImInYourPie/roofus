@@ -29,10 +29,6 @@ class OpenhouseUseCase implements IOpenhouseUseCase {
     openhouseData: IOpenhouseData,
   ): Promise<IOpenhouseEntity> {
     const openhouseWithProperty = await this.buildOpenhouse(openhouseData);
-    console.log(
-      "🚀 ~ file: openhouse.usecase.ts:32 ~ OpenhouseUseCase ~ openhouseWithProperty",
-      openhouseWithProperty,
-    );
 
     return await this.service.createOpenhouse(openhouseWithProperty);
   }
