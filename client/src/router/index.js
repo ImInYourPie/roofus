@@ -4,6 +4,7 @@ import store from "../store";
 
 import Login from "../pages/Login.page.vue";
 import Home from "../pages/Home.page.vue";
+import Details from "../pages/Details.page.vue";
 
 const routes = [
   {
@@ -16,6 +17,12 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/property/:propertyId",
+    name: "Details",
+    component: Details,
     meta: { requiresAuth: true },
   },
 ];

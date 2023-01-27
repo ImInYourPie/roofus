@@ -58,17 +58,23 @@ class PropertyService {
   };
 
   public getPrev = async (date: string): Promise<IPropertyEntity | null> => {
-    const prevEntries = await this.repository.find({
-      createdAt: { $lt: date },
-    });
+    const prevEntries = await this.repository.find(
+      {
+        createdAt: { $lt: date },
+      },
+      { orderBy: { createdAt: "ASC" } },
+    );
 
     return prevEntries[prevEntries.length - 1] || null;
   };
 
   public getNext = async (date: string): Promise<IPropertyEntity | null> => {
-    const nextEntries = await this.repository.find({
-      createdAt: { $gt: date },
-    });
+    const nextEntries = await this.repository.find(
+      {
+        createdAt: { $gt: date },
+      },
+      { orderBy: { createdAt: "ASC" } },
+    );
     return nextEntries[nextEntries.length - 1] || null;
   };
 }

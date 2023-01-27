@@ -5,6 +5,10 @@ export default {
     const res = await api.get("/property");
     return { ...res.data };
   },
+  async fetchPropertyById({ propertyId }) {
+    const res = await api.get(`/property/${propertyId}`);
+    return { ...res.data };
+  },
   async newProperty({ adress }) {
     const res = await api.post("/property", { adress });
     return { ...res.data };

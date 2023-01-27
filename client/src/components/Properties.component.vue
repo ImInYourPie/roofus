@@ -1,6 +1,7 @@
 <script>
 import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
+import PropertyCard from "./PropertyCard.component.vue";
 
 export default {
   setup() {
@@ -10,29 +11,22 @@ export default {
       await store.dispatch("properties/getProperties");
     };
 
-    const handleEdit = (property) => {
-      store.commit("properties/setForm", property);
-      store.commit("properties/setOpenForm", true);
-    };
-
     const handleNew = () => {
       store.commit("properties/setIsNew", true);
       store.commit("properties/setForm", { adress: "" });
       store.commit("properties/setOpenForm", true);
     };
 
-    onMounted(() => {
-      store.dispatch("properties/getProperties");
-    });
+    onMounted(fetch);
 
     return {
       items: computed(() => store.state.properties.items),
       count: computed(() => store.state.properties.count),
       loading: computed(() => store.state.properties.loading),
       handleNew,
-      handleEdit,
     };
   },
+  components: { PropertyCard },
 };
 </script>
 
@@ -45,18 +39,7 @@ export default {
   </div>
   <v-row>
     <v-col v-for="item in items" :key="item.id" cols="12" sm="6" md="4">
-      <v-card variant="outlined">
-        <v-card-title>{{ item.adress }}</v-card-title>
-        <v-card-actions>
-          <v-btn
-            size="small"
-            variant="outlined"
-            color="secondary"
-            @click="() => handleEdit(item)"
-            >Edit</v-btn
-          >
-        </v-card-actions>
-      </v-card>
+      <PropertyCard :item="item" showEdit="true" />
     </v-col>
   </v-row>
 </template>

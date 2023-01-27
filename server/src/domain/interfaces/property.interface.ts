@@ -39,8 +39,8 @@ interface IPropertyService {
   ): Promise<IPropertyEntity>;
   getMany(): Promise<IPropertyList>;
   getOneById(id: string): Promise<IPropertyEntity>;
-  getPrev(id: string): Promise<IPropertyEntity>;
-  getNext(id: string): Promise<IPropertyEntity>;
+  getPrev(id: string): Promise<IPropertyEntity | null>;
+  getNext(id: string): Promise<IPropertyEntity | null>;
 }
 
 export {
