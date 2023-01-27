@@ -73,6 +73,7 @@ export default {
             generic: "",
           });
           commit("setItems", [data.openhouse, ...state.items]);
+          commit("setCount", ++state.count);
 
           return true;
         });

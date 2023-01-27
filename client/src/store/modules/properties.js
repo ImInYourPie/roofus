@@ -59,6 +59,7 @@ export default {
           commit("setOpenForm", false);
           commit("setErrors", { adress: "", generic: "" });
           commit("setItems", [data.property, ...state.items]);
+          commit("setCount", ++state.count);
 
           return true;
         });
