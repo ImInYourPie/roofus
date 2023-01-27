@@ -10,6 +10,7 @@ class OpenhouseController {
     this.useCase = useCase;
     this.router.use(authMiddleware.authenticate());
     this.router.route("/").get(this.many).post(this.create);
+    this.router.route("/property/:propertyId").get(this.manyByProperty);
     this.router.route("/:openhouseId").get(this.one).patch(this.edit);
   }
 
@@ -65,6 +66,21 @@ class OpenhouseController {
   ): Promise<void> => {
     try {
       const data = await this.useCase.list();
+      const response = new HttpResponse(data);
+      res.send(response);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  private manyByProperty = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const { propertyId } = req.params;
+      const data = await this.useCase.listByPropertyId(propertyId);
       const response = new HttpResponse(data);
       res.send(response);
     } catch (err) {

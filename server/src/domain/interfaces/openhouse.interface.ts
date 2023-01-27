@@ -29,11 +29,13 @@ interface IOpenhouseService {
     openhouseData: IOpenhouseWithProperty,
   ): Promise<IOpenhouseEntity>;
   getMany(): Promise<IOpenhouseList>;
+  getManyByPropertyId(propertyId: string): Promise<IOpenhouseList>;
   getOneById(id: string): Promise<IOpenhouseEntity>;
 }
 
 interface IOpenhouseUseCase {
   list(): Promise<IOpenhouseList>;
+  listByPropertyId(propertyId: string): Promise<IOpenhouseList>;
   getOne(id: string): Promise<IOpenhouseEntity>;
   createOneOpenhouse(openhouseData: IOpenhouseData): Promise<IOpenhouseEntity>;
   editOneOpenhouse(

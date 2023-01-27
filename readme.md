@@ -7,6 +7,10 @@
 
 #### Notes
 
+Login info for created admin:
+email: admin.one@gmail.com
+password: 123456
+
 Eliminated the need for setting up a separate database by utilizing MongoDB Atlas, which includes a pre-configured URI with preset data and allows connections from any location.
 Just put the .env file provided in /server, and change VITE_API_URL, in /client, to the decired port.
 
@@ -25,4 +29,5 @@ Just put the .env file provided in /server, and change VITE_API_URL, in /client,
 - Ensured that non-existing users cannot be added to an open house;
 - Selected MongoDB as the database for its ease of setup and the ability to easily share the project.
 - Implemented requested features;
-- Implemented requested validations.
+- Implemented requested validations;
+- Did not create a signup page, as it was not defined on the requirements from my understanding, altought, it is possible to create new admins via POST /admin, with "email" and "password".

@@ -59,6 +59,14 @@ class OpenhouseService implements IOpenhouseService {
     return { openhouses, count };
   };
 
+  public getManyByPropertyId = async (id: string): Promise<IOpenhouseList> => {
+    const [openhouses, count] = await this.repository.findAndCount(
+      { property: id },
+      { populate: ["property"] },
+    );
+    return { openhouses, count };
+  };
+
   public getOneById = async (id: string): Promise<IOpenhouseEntity> => {
     const openhouse = await this.repository.findOne(id, {
       populate: ["property"],

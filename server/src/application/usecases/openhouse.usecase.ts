@@ -51,6 +51,10 @@ class OpenhouseUseCase implements IOpenhouseUseCase {
     return await this.service.getMany();
   }
 
+  public async listByPropertyId(propertyId: string): Promise<IOpenhouseList> {
+    return await this.service.getManyByPropertyId(propertyId);
+  }
+
   private buildOpenhouse = async (
     openhouseData: IOpenhouseData,
   ): Promise<IOpenhouseWithProperty> => {
